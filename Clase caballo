@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Caballo extends Figura {
+
+    public Caballo(int[] posicion) {
+        super(posicion);
+    }
+
+    @Override
+    public List<String> calcularMovimientos() {
+        List<String> movimientos = new ArrayList<>();
+        int fila = posicion[0];
+        int columna = posicion[1];
+
+        int[][] offsets = {
+            {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
+            {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
+        };
+
+        for (int[] offset : offsets) {
+            int nuevaFila = fila + offset[0];
+            int nuevaColumna = columna + offset[1];
+            if (nuevaFila >= 0 && nuevaFila < 8 && nuevaColumna >= 0 && nuevaColumna < 8) {
+                movimientos.add((char) ('a' + nuevaColumna) + Integer.toString(8 - nuevaFila));
+            }
+        }
+
+        return movimientos;
+    }
+}
