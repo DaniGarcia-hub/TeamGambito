@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class MovimientoFicha {
-
 
     public static int[] convertirPosicion(String posicionInicial) {
         int fila = 8 - Character.getNumericValue(posicionInicial.charAt(1));
@@ -10,63 +6,127 @@ public class MovimientoFicha {
         return new int[]{fila, columna};
     }
 
-
-    public static List<String> calcularMovimientosCaballo(int[] posicionInicial) {
-        List<String> movimientos = new ArrayList<>();
+    public static String[] calcularMovimientosCaballo(int[] posicionInicial) {
+        String[] movimientos = new String[8];
         int fila = posicionInicial[0];
         int columna = posicionInicial[1];
-
 
         int[][] movimientosPosibles = {
                 {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
                 {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
         };
 
-        for (int[] movimientoPosibles : movimientosPosibles) {
-            int nuevaFila = fila + movimientoPosibles[0];
-            int nuevaColumna = columna + movimientoPosibles[1];
+        int index = 0;
+        for (int[] movimientoPosible : movimientosPosibles) {
+            int nuevaFila = fila + movimientoPosible[0];
+            int nuevaColumna = columna + movimientoPosible[1];
             if (nuevaFila >= 0 && nuevaFila < 8 && nuevaColumna >= 0 && nuevaColumna < 8) {
-                movimientos.add((char) ('A' + nuevaColumna) + Integer.toString(8 - nuevaFila));
+                movimientos[index++] = (char) ('A' + nuevaColumna) + Integer.toString(8 - nuevaFila);
             }
         }
 
         return movimientos;
     }
 
-
-    public static List<String> calcularMovimientosTorre(int[] posicionInicial) {
-        List<String> movimientos = new ArrayList<>();
+    public static String[] calcularMovimientosTorre(int[] posicionInicial) {
+        String[] movimientos = new String[14];
         int fila = posicionInicial[0];
         int columna = posicionInicial[1];
 
+        int index = 0;
 
         for (int nuevaFila = 0; nuevaFila < 8; nuevaFila++) {
             if (nuevaFila != fila) {
-                movimientos.add((char) ('A' + columna) + Integer.toString(8 - nuevaFila));
+                movimientos[index++] = (char) ('A' + columna) + Integer.toString(8 - nuevaFila);
             }
         }
 
 
         for (int nuevaColumna = 0; nuevaColumna < 8; nuevaColumna++) {
             if (nuevaColumna != columna) {
-                movimientos.add((char) ('A' + nuevaColumna) + Integer.toString(8 - fila));
+                movimientos[index++] = (char) ('A' + nuevaColumna) + Integer.toString(8 - fila);
             }
         }
 
         return movimientos;
     }
 
+    public static String[] calcularMovimientosDama(int[] posicionInicial) {
+        String[] movimientos = new String[27];
+        int fila = posicionInicial[0];
+        int columna = posicionInicial[1];
 
-    public static List<String> calcularMovimientos(String tipoFicha, int[] posicionInicial) {
-        if (tipoFicha == null) return new ArrayList<>();
+        int index = 0;
+
+        for (int i = 1; i < 8; i++) {
+            if (fila - i >= 0 && columna + i < 8) {
+                movimientos[index++] = (char) ('A' + columna + i) + Integer.toString(8 - fila + i);
+            }
+            if (fila - i >= 0 && columna - i >= 0) {
+                movimientos[index++] = (char) ('A' + columna - i) + Integer.toString(8 - fila + i);
+            }
+            if (fila + i < 8 && columna + i < 8) {
+                movimientos[index++] = (char) ('A' + columna + i) + Integer.toString(8 - fila - i);
+            }
+            if (fila + i < 8 && columna - i >= 0) {
+                movimientos[index++] = (char) ('A' + columna - i) + Integer.toString(8 - fila - i);
+            }
+        }
+
+        for (int nuevaFila = 0; nuevaFila < 8; nuevaFila++) {
+            if (nuevaFila != fila) {
+                movimientos[index++] = (char) ('A' + columna) + Integer.toString(8 - nuevaFila);
+            }
+        }
+
+        for (int nuevaColumna = 0; nuevaColumna < 8; nuevaColumna++) {
+            if (nuevaColumna != columna) {
+                movimientos[index++] = (char) ('A' + nuevaColumna) + Integer.toString(8 - fila);
+            }
+        }
+
+        return movimientos;
+    }
+
+    public static String[] calcularMovimientosAlfil(int[] posicionInicial) {
+        String[] movimientos = new String[27];
+        int fila = posicionInicial[0];
+        int columna = posicionInicial[1];
+
+        int index = 0;
+
+        for (int i = 1; i < 8; i++) {
+            if (fila - i >= 0 && columna + i < 8) {
+                movimientos[index++] = (char) ('A' + columna + i) + Integer.toString(8 - fila + i);
+            }
+            if (fila - i >= 0 && columna - i >= 0) {
+                movimientos[index++] = (char) ('A' + columna - i) + Integer.toString(8 - fila + i);
+            }
+            if (fila + i < 8 && columna + i < 8) {
+                movimientos[index++] = (char) ('A' + columna + i) + Integer.toString(8 - fila - i);
+            }
+            if (fila + i < 8 && columna - i >= 0) {
+                movimientos[index++] = (char) ('A' + columna - i) + Integer.toString(8 - fila - i);
+            }
+        }
+
+        return movimientos;
+    }
+
+    public static String[] calcularMovimientos(String tipoFicha, int[] posicionInicial) {
+        if (tipoFicha == null) return new String[0];
 
         switch (tipoFicha.toLowerCase()) {
             case "caballo":
                 return calcularMovimientosCaballo(posicionInicial);
             case "torre":
                 return calcularMovimientosTorre(posicionInicial);
+            case "dama":
+                return calcularMovimientosDama(posicionInicial);
+            case "alfil":
+                return calcularMovimientosAlfil(posicionInicial);
             default:
-                return new ArrayList<>();
+                return new String[0];
         }
     }
 }
