@@ -112,6 +112,27 @@ public class MovimientoFicha {
 
         return movimientos;
     }
+    
+    public static String[] calcularMovimientosRey(int[] posicionInicial){
+        String[] movimientos = new String[8];
+        int fila = posicionInicial[0];
+        int columna = posicionInicial[1];
+        int index = 0;
+
+        int[][] movimientosPosibles = {
+                {1, 0}, {-1, 0}, {0, 1}, {0, -1},
+                {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
+        };
+
+        for (int[] movimientoPosible : movimientosPosibles){
+            int nuevaFila = fila+movimientoPosible[0];
+            int nuevaColumna = columna+movimientoPosible[1];
+            if(nuevaFila >= 0 && nuevaFila<8 && nuevaColumna>=0 && nuevaColumna<8){
+                movimientos[index++]=(char)('A'+ nuevaColumna)+Integer.toString(8-nuevaFila);
+            }
+        }
+        return movimientos;
+    }
 
     public static String[] calcularMovimientos(String tipoFicha, int[] posicionInicial) {
         if (tipoFicha == null) return new String[0];
@@ -125,6 +146,8 @@ public class MovimientoFicha {
                 return calcularMovimientosDama(posicionInicial);
             case "alfil":
                 return calcularMovimientosAlfil(posicionInicial);
+            case "rey":
+                return calcularMovimientosRey(posicionInicial);
             default:
                 return new String[0];
         }
