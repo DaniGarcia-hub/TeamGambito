@@ -1,36 +1,36 @@
 public class PiezasAjedrez {
     public static void main(String[] args) {
         // Piezas Negras
-        char reyBlanco = '\u2654';
-        char reinaBlanca = '\u2655';
-        char torreBlanca = '\u2656';
-        char alfilBlanco = '\u2657';
-        char caballoBlanco = '\u2658';
-        char peonBlanco = '\u2659';
+        char reyNegro = '\u2654';
+        char reinaNegra = '\u2655';
+        char torreNegra = '\u2656';
+        char alfilNegro = '\u2657';
+        char caballoNegro = '\u2658';
+        char peonNegro = '\u2659';
 
         // Piezas Blancas
-        char reyNegro = '\u265A';
-        char reinaNegra = '\u265B';
-        char torreNegra = '\u265C';
-        char alfilNegro = '\u265D';
-        char caballoNegro = '\u265E';
-        char peonNegro = '\u265F';
+        char reyBlanco = '\u265A';
+        char reinaBlanca = '\u265B';
+        char torreBlanca = '\u265C';
+        char alfilBlanca = '\u265D';
+        char caballoBlanco = '\u265E';
+        char peonBlanco = '\u265F';
 
         // Imprimir piezas
         System.out.println("Piezas Negras:");
-        System.out.println("Rey: " + reyBlanco);
-        System.out.println("Reina: " + reinaBlanca);
-        System.out.println("Torre: " + torreBlanca);
-        System.out.println("Alfil: " + alfilBlanco);
-        System.out.println("Caballo: " + caballoBlanco);
-        System.out.println("Peón: " + peonBlanco);
-
-        System.out.println("Piezas Blancas:");
         System.out.println("Rey: " + reyNegro);
         System.out.println("Reina: " + reinaNegra);
         System.out.println("Torre: " + torreNegra);
         System.out.println("Alfil: " + alfilNegro);
         System.out.println("Caballo: " + caballoNegro);
         System.out.println("Peón: " + peonNegro);
+
+        System.out.println("Piezas Blancas:");
+        System.out.println("Rey: " + reyBlanco);
+        System.out.println("Reina: " + reinaBlanco);
+        System.out.println("Torre: " + torreBlanco);
+        System.out.println("Alfil: " + alfilBlanco);
+        System.out.println("Caballo: " + caballoBlanco);
+        System.out.println("Peón: " + peonBlanco);
     }
 }
