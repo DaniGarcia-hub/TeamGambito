@@ -1,0 +1,40 @@
+public class TableroAjedrez {
+
+    // Secuencias de escape ANSI para colores
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+
+    public static void main(String[] args) {
+        imprimirTablero();
+    }
+
+    // Método para imprimir el tablero
+    public static void imprimirTablero() {
+        // Imprimir las letras de las columnas (a-h) en la parte superior del tablero
+        System.out.print("  ");
+        for (char c = 'a'; c <= 'h'; c++) {
+            System.out.print(" " + c + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < 8; i++) {
+            System.out.print((8 - i) + " "); // Imprimir el número de la fila
+            for (int j = 0; j < 8; j++) {
+                if ((i + j) % 2 == 0) {
+                    System.out.print(ANSI_WHITE_BACKGROUND + "   " + ANSI_RESET); // Casilla blanca
+                } else {
+                    System.out.print(ANSI_BLACK_BACKGROUND + "   " + ANSI_RESET); // Casilla negra
+                }
+            }
+            System.out.println(" " + (8 - i)); // Imprimir el número de la fila al final
+        }
+
+        // Imprimir las letras de las columnas (a-h) en la parte inferior del tablero
+        System.out.print("  ");
+        for (char c = 'a'; c <= 'h'; c++) {
+            System.out.print(" " + c + " ");
+        }
+        System.out.println();
+    }
+}
