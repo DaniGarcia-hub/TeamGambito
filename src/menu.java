@@ -165,7 +165,7 @@ public class menu {
                     case 4 -> resultado = "Caballo";
                     case 5 -> resultado = "Alfil";
                     case 6 -> resultado = "Peón";
-                    default -> System.out.println("Opción no válida.");
+                    default -> System.out.println("Opción no válida. Vuelve a introducir una opción: ");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Error: Solo puedes introducir números.");
@@ -181,9 +181,13 @@ public class menu {
         do {
             try {
                 color = sc.nextInt();
-                if (color == 1) resultado = "Blanco";
-                else if (color == 2) resultado = "Negro";
-                else System.out.println("Opción no válida.");
+                if (color == 1){
+                    resultado = "Blanco";
+                }else if (color == 2){
+                    resultado = "Negro";
+                }else {
+                    System.out.println("Opción no válida. Vuelve a introdicir una opción: ");
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Error: Solo puedes introducir números.");
                 sc.next();
