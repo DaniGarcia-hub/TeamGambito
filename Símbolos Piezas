@@ -1,6 +1,6 @@
 public class PiezasAjedrez {
     public static void main(String[] args) {
-        // Piezas Blancas
+        // Piezas Negras
         char reyBlanco = '\u2654';
         char reinaBlanca = '\u2655';
         char torreBlanca = '\u2656';
@@ -8,7 +8,7 @@ public class PiezasAjedrez {
         char caballoBlanco = '\u2658';
         char peonBlanco = '\u2659';
 
-        // Piezas Negras
+        // Piezas Blancas
         char reyNegro = '\u265A';
         char reinaNegra = '\u265B';
         char torreNegra = '\u265C';
@@ -17,7 +17,7 @@ public class PiezasAjedrez {
         char peonNegro = '\u265F';
 
         // Imprimir piezas
-        System.out.println("Piezas Blancas:");
+        System.out.println("Piezas Negras:");
         System.out.println("Rey: " + reyBlanco);
         System.out.println("Reina: " + reinaBlanca);
         System.out.println("Torre: " + torreBlanca);
@@ -25,7 +25,7 @@ public class PiezasAjedrez {
         System.out.println("Caballo: " + caballoBlanco);
         System.out.println("Peón: " + peonBlanco);
 
-        System.out.println("Piezas Negras:");
+        System.out.println("Piezas Blancas:");
         System.out.println("Rey: " + reyNegro);
         System.out.println("Reina: " + reinaNegra);
         System.out.println("Torre: " + torreNegra);
