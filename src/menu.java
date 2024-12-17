@@ -1,5 +1,4 @@
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class menu {
@@ -30,28 +29,28 @@ public class menu {
 
                         System.out.println("""
                         \\nINFORMACIÓN ADICIONAL.
-                                                                                                                                                 
+                                                                                                                                                  \
                         | Información piezas |
-                                                                                                                                                 
+                                                                                                                                                  \
                         En el ajedrez, existen 6 tipos de piezas diferentes, y cada uno tiene unos movimientos determinados.
                         Piezas existentes y sus movimientos:
                         - REY: Se mueve 1 casilla en cualquier dirección. Puede hacer el enroque.
-                                                                                                                                                 
+                                                                                                                                                  \
                         - DAMA: Se mueve todas las casillas que quiera, en horizontal, vertical o diagonal.
-                                                                                                                                                 
+                                                                                                                                                  \
                         - TORRE: Se mueve todas las casillas que quiera, en vertical o horizontal.
-                                                                                                                                                 
+                                                                                                                                                  \
                         - ALFIL: Se mueve todas las casillas que quiera, en diagonal y por casillas del mismo color que la que se encuentra.
-                                                                                                                                                 
+                                                                                                                                                  \
                         - CABALLO: Tiene dos posibilidades de movimientos:
                         1. Puede moverse una casilla en vertical, y dos en horizontal.
                         2. Puede moverse dos casillas en vertical, y una en horizontal.
                         En cualquier opción, el caballo en cada movimiento deberá llegar a una casilla de distinto color. Puede saltar cualquier pieza. Para matar tiene que caer encima de la pieza contraria.
-                                                                                                                                                 
+                                                                                                                                                  \
                         - PEÓN: No se mueve para atrás ni para los lados. Avanza 1 casilla adelante. Si tiene una pieza en diagonal hacia delante de él, si se puede mover hacía esa posición y matar. Si la posición inicial es la fila 2 (Blancos) o 7 (Negras), puede moverse 2 casillas. Si llega al final, puede ser modificada por otra pieza.
-                                                                                                                                                 
+                                                                                                                                                  \
                         | Colores piezas, orientación y información del tablero |
-                                                                                                                                                 
+                                                                                                                                                  \
                         El tablero que se usa en ajedrez, se trata de un 8x8 (8 casillas en horizontal, y 8 casillas en vertical), es decir 64 casillas.
                         Las filas se nombran por números, del 1 al 8. En cambio, las columnas se nombran por letras alfabéticas, de la A a la H.
                         Ejemplos:
@@ -59,12 +58,12 @@ public class menu {
                              - Casilla F5.
                              - Casilla H6.
                              - Casilla C8.
-                                                                                                                                                 
+                                                                                                                                                  \
                         Existen dos colores diferentes, "Blancas" y "Negras". Dependiendo del color, las piezas se colocarán de una forma u otra.
-                                                                                                                                                 
+                                                                                                                                                  \
                         - Blancas: Sus torres tendrán que estar en la parte inferior del tablero. Es decir, sus torres quedarán situadas en A1 y H1 respectivamente. A la hora de moverse, generalmente se moverán hacia arriba (sin tener en cuenta los movimientos de cada pieza).
                         - Negras: Sus torres se situarán inicialmente en la parte superior del tablero. Sus torres se encontrarán colocadas en A8 y H8 respectivamente. Sus movimientos, en general, serán hacia abajo.
-                                                                                                                                                 
+                                                                                                                                                  \
                         Hay que tener en cuenta la orientación del tablero, donde una casilla blanca deberá quedar a la derecha del tablero (A8 y H1).
                         """);
 
@@ -90,21 +89,21 @@ public class menu {
                             CrearFicha ficha = new CrearFicha(tipoFicha, color, posicionInicial);
                             System.out.println(ficha);
 
-
                             int[] posicion = MovimientoFicha.convertirPosicion(posicionInicial);
-                            List<String> movimientosPosibles = MovimientoFicha.calcularMovimientos(tipoFicha, posicion);
+                            String[] movimientosPosibles = MovimientoFicha.calcularMovimientos(tipoFicha, posicion);
 
-                            if (movimientosPosibles == null || movimientosPosibles.isEmpty()) {
+                            if (movimientosPosibles == null || movimientosPosibles.length == 0) {
                                 System.out.println("No hay movimientos posibles o la ficha no está implementada.");
                             } else {
                                 System.out.println("Movimientos posibles:");
                                 for (String movimiento : movimientosPosibles) {
-                                    System.out.print("[" + movimiento+ "]" + " ");
+                                    if (movimiento != null) {
+                                        System.out.print("[" + movimiento + "] ");
+                                    }
                                 }
                             }
 
                             System.out.println(" ");
-
                             salirMenuInicial2 = esperarConfirmacion("¿Quieres volver al menú principal? (S/N): ");
                         } while (!salirMenuInicial2);
                         break;
