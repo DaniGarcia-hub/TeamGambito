@@ -17,6 +17,11 @@ public class menu {
             System.out.println("***************");
             System.out.println("CHESS POSITION");
             System.out.println("***************");
+            System.out.println("""
+                ¡BIENVENIDO AL PROGRAMA DE "Movimiento de piezas de ajedrez sobre un tablero"!
+                
+                El programa consiste en indicar una ficha de ajedrez, su color y su posición inicial dentro del tablero. Tras esto, se indicará según la posición y las características de dicha pieza, los posibles movimientos a realizar.
+                """);
             mostrarMenuInicial();
 
             try {
