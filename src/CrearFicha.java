@@ -38,8 +38,8 @@ public class CrearFicha {
     @Override
     public String toString() {
         return "Información ficha: " +
-                "Tipo de ficha: " + tipoFicha + " | " +
+                "[ Tipo de ficha: " + tipoFicha + " | " +
                 "Color: " + color + " | " +
-                "Posicion inicial: " + posicionInicial;
+                "Posicion inicial: " + posicionInicial + " ]";
     }
 }
