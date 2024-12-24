@@ -108,6 +108,9 @@ public class Main {
                             System.out.println(ficha.toString());
 
                             movimientosPosibles(MovimientoFicha.torre(ficha, tablero));
+                            movimientosPosibles(MovimientoFicha.alfil(ficha,tablero));
+                            movimientosPosibles(MovimientoFicha.dama(ficha,tablero));
+
 
 //                            boolean esBlanco = color.equalsIgnoreCase("Blanco");
 //                            String[] movimientosPosibles = MovimientoFicha.calcularMovimientos(tipoFicha, posicion, esBlanco);
