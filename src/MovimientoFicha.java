@@ -67,4 +67,53 @@ public class MovimientoFicha {
 
         return movimientos;
     }
+
+    public static String[] alfil(CrearFicha ficha, CrearTablero tablero){
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+
+        String[] movimientos = new String[32];
+        int posicionOcupar = 0;
+
+        // Diagonal arriba-derecha
+        for (int i = 1; posicionConvertida[0] - i >= 0 && posicionConvertida[1] + i < tablero.getCantidadColumnas(); i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + i) + (8 - (posicionConvertida[0] - i));
+            posicionOcupar++;
+        }
+
+        // Diagonal arriba-izquierda
+        for (int i = 1; posicionConvertida[0] - i >= 0 && posicionConvertida[1] - i >= 0; i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - i) + (8 - (posicionConvertida[0] - i));
+            posicionOcupar++;
+        }
+
+        // Diagonal abajo-derecha
+        for (int i = 1; posicionConvertida[0] + i < tablero.getCantidadFilas() && posicionConvertida[1] + i < tablero.getCantidadColumnas(); i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + i) + (8 - (posicionConvertida[0] + i));
+            posicionOcupar++;
+        }
+
+        // Diagonal abajo-izquierda
+        for (int i = 1; posicionConvertida[0] + i < tablero.getCantidadFilas() && posicionConvertida[1] - i >= 0; i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - i) + (8 - (posicionConvertida[0] + i));
+            posicionOcupar++;
+        }
+
+        // Recortar el array para eliminar posiciones vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+        return movimientosFinales;
+    }
+
+    public static String[] dama(CrearFicha ficha, CrearTablero tablero) {
+        String[] movimientosAlfil = alfil(ficha, tablero);
+        String[] movimientosTorre = torre(ficha, tablero);
+
+        String[] movimientos = new String[movimientosAlfil.length + movimientosTorre.length];
+
+        System.arraycopy(movimientosTorre, 0, movimientos, 0, movimientosTorre.length);
+        System.arraycopy(movimientosAlfil, 0, movimientos, movimientosTorre.length, movimientosAlfil.length);
+
+        return movimientos;
+    }
 }
