@@ -103,28 +103,31 @@ public class Main {
                                 }
                             }
 
-                            CrearTablero tablero = new CrearTablero(8,8);
+                            // Crear tablero y ficha
+                            CrearTablero tablero = new CrearTablero(8, 8);
                             CrearFicha ficha = new CrearFicha(tipoFicha, color, posicionInicial);
+
+                            // Imprimir la información de la ficha
                             System.out.println(ficha.toString());
 
-                            movimientosPosibles(MovimientoFicha.torre(ficha, tablero));
-                            movimientosPosibles(MovimientoFicha.alfil(ficha,tablero));
-                            movimientosPosibles(MovimientoFicha.dama(ficha,tablero));
-
-
-//                            boolean esBlanco = color.equalsIgnoreCase("Blanco");
-//                            String[] movimientosPosibles = MovimientoFicha.calcularMovimientos(tipoFicha, posicion, esBlanco);
-//
-//                            if (movimientosPosibles == null || movimientosPosibles.length == 0) {
-//                                System.out.println("No hay movimientos posibles o la ficha no está implementada.");
-//                            } else {
-//                                System.out.println("Movimientos posibles:");
-//                                for (String movimiento : movimientosPosibles) {
-//                                    if (movimiento != null) {
-//                                        System.out.print("[" + movimiento + "] ");
-//                                    }
-//                                }
-//                            }
+                            // Aquí añadimos los movimientos creados en MovimientoFicha reconociendo cada nombre.
+                            switch (tipoFicha.toLowerCase()) {
+                                case "torre":
+                                    movimientosPosibles(MovimientoFicha.torre(ficha, tablero));
+                                    break;
+                                case "alfil":
+                                    movimientosPosibles(MovimientoFicha.alfil(ficha, tablero));
+                                    break;
+                                case "dama":
+                                    movimientosPosibles(MovimientoFicha.dama(ficha, tablero));
+                                    break;
+                                case "rey":
+                                    movimientosPosibles(MovimientoFicha.rey(ficha, tablero));
+                                    break;
+                                default:
+                                    System.out.println("Los movimientos para esta ficha no están implementados.");
+                                    break;
+                            }
 
                             System.out.println(" ");
                             salirMenuInicial2 = esperarConfirmacion("¿Desea volver al menú principal? (S/N): ");
@@ -182,7 +185,6 @@ public class Main {
             try {
                 ficha = sc.nextInt();
                 switch (ficha) {
-                    // Información de esta forma de colocar case: https://oregoom.com/java/switch/
                     case 1 -> resultado = "Rey";
                     case 2 -> resultado = "Dama";
                     case 3 -> resultado = "Torre";
@@ -232,7 +234,6 @@ public class Main {
     }
 
     public static boolean validacionPosicion(String posicionInicial){
-
         boolean resultado = true;
 
         if (posicionInicial.length() != 2){
