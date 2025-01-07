@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class menu {
 
     static Scanner sc = new Scanner(System.in);
 
@@ -124,6 +124,8 @@ public class Main {
                                 case "rey":
                                     movimientosPosibles(MovimientoFicha.rey(ficha, tablero));
                                     break;
+                                case "caballo":
+                                    movimientosPosibles(MovimientoFicha.caballo(ficha, tablero));
                                 default:
                                     System.out.println("Los movimientos para esta ficha no están implementados.");
                                     break;
