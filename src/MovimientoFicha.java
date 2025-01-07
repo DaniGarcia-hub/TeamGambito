@@ -24,9 +24,7 @@ public class MovimientoFicha {
         return posicionConvertida;
     }
 
-//    public static String[] caballo(CrearFicha ficha, int[] posiciones){
-//
-//    }
+
 
     public static String[] torre(CrearFicha ficha, CrearTablero tablero){
         int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
