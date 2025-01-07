@@ -1,0 +1,32 @@
+public static String[] caballo(CrearFicha ficha, CrearTablero tablero) {
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+
+        // posibles movimientos del caballo
+        int[][] desplazamientos = {
+                {-2, -1}, {-1, -2}, {1, -2}, {2, -1},
+                {2, 1}, {1, 2}, {-1, 2}, {-2, 1}
+        };
+
+        String[] movimientos = new String[8]; // 8 movimientos posibles
+        int posicionOcupar = 0;
+
+        for (int[] desplazamiento : desplazamientos) {
+            int nuevaFila = posicionConvertida[0] + desplazamiento[0];
+            int nuevaColumna = posicionConvertida[1] + desplazamiento[1];
+
+            // verificar limites
+            if (nuevaFila >= 0 && nuevaFila < tablero.getCantidadFilas() &&
+                    nuevaColumna >= 0 && nuevaColumna < tablero.getCantidadColumnas()) {
+                // convertir otra vez
+                String movimiento = Character.toString(letrasAscii + nuevaColumna) + (8 - nuevaFila);
+                movimientos[posicionOcupar] = movimiento;
+                posicionOcupar++;
+            }
+        }
+
+        // eliminar posiciones vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+        return movimientosFinales;
+    }
