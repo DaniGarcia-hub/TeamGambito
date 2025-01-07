@@ -174,4 +174,69 @@ public class MovimientoFicha {
         return movimientos;
     }
 
+    public static String[] caballo(CrearFicha ficha, CrearTablero tablero) {
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+
+        String[] movimientos = new String[8];
+        int posicionOcupar = 0;
+
+        int letrasAscii = 'a';
+
+        // Movimiento 1: 2 hacia adelante, 1 hacia la derecha
+        if (posicionConvertida[0] + 2 < tablero.getCantidadFilas() && posicionConvertida[1] + 1 < tablero.getCantidadColumnas()) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + 1) + (8 - (posicionConvertida[0] + 2));
+            posicionOcupar++;
+        }
+
+        // Movimiento 2: 2 hacia adelante, 1 hacia la izquierda
+        if (posicionConvertida[0] + 2 < tablero.getCantidadFilas() && posicionConvertida[1] - 1 >= 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - 1) + (8 - (posicionConvertida[0] + 2));
+            posicionOcupar++;
+        }
+
+        // Movimiento 3: 2 hacia atrás, 1 hacia la derecha
+        if (posicionConvertida[0] - 2 >= 0 && posicionConvertida[1] + 1 < tablero.getCantidadColumnas()) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + 1) + (8 - (posicionConvertida[0] - 2));
+            posicionOcupar++;
+        }
+
+        // Movimiento 4: 2 hacia atrás, 1 hacia la izquierda
+        if (posicionConvertida[0] - 2 >= 0 && posicionConvertida[1] - 1 >= 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - 1) + (8 - (posicionConvertida[0] - 2));
+            posicionOcupar++;
+        }
+
+        // Movimiento 5: 1 hacia adelante, 2 hacia la derecha
+        if (posicionConvertida[0] + 1 < tablero.getCantidadFilas() && posicionConvertida[1] + 2 < tablero.getCantidadColumnas()) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + 2) + (8 - (posicionConvertida[0] + 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento 6: 1 hacia adelante, 2 hacia la izquierda
+        if (posicionConvertida[0] + 1 < tablero.getCantidadFilas() && posicionConvertida[1] - 2 >= 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - 2) + (8 - (posicionConvertida[0] + 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento 7: 1 hacia atrás, 2 hacia la derecha
+        if (posicionConvertida[0] - 1 >= 0 && posicionConvertida[1] + 2 < tablero.getCantidadColumnas()) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + 2) + (8 - (posicionConvertida[0] - 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento 8: 1 hacia atrás, 2 hacia la izquierda
+        if (posicionConvertida[0] - 1 >= 0 && posicionConvertida[1] - 2 >= 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - 2) + (8 - (posicionConvertida[0] - 1));
+            posicionOcupar++;
+        }
+
+        // Recortar el array para eliminar posiciones vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+        return movimientosFinales;
+    }
+
+
+
 }
