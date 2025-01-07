@@ -1,108 +1,219 @@
 public class MovimientoFicha {
 
-    public static int[] convertirPosicion(String posicionInicial) {
-        int fila = 8 - Character.getNumericValue(posicionInicial.charAt(1));
-        int columna = posicionInicial.charAt(0) - 'A';
-        return new int[]{fila, columna};
+    static final int letrasAscii = 65; // Letra A.
+
+    public static int[] convertirPosicion(String posicionInicial){
+        char columnaInicial = posicionInicial.charAt(0);
+        String filaInicial = String.valueOf(posicionInicial.charAt(1));
+
+        int columnaConvertida = -1;
+        int filaConvertida = (8 - Integer.parseInt(filaInicial)); // El -1 para que, si mete el 1, que para ajustar a las mediciones del tablero en Java.
+
+        switch (columnaInicial){
+            case 'A' -> columnaConvertida = 0;
+            case 'B' -> columnaConvertida = 1;
+            case 'C' -> columnaConvertida = 2;
+            case 'D' -> columnaConvertida = 3;
+            case 'E' -> columnaConvertida = 4;
+            case 'F' -> columnaConvertida = 5;
+            case 'G' -> columnaConvertida = 6;
+            case 'H' -> columnaConvertida = 7;
+        }
+
+        int[] posicionConvertida = {filaConvertida, columnaConvertida};
+        return posicionConvertida;
     }
 
-    public static String[] calcularMovimientosCaballo(int[] posicionInicial) {
+//    public static String[] caballo(CrearFicha ficha, int[] posiciones){
+//
+//    }
+
+    public static String[] torre(CrearFicha ficha, CrearTablero tablero){
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+
+        String[] movimientos = new String[14];
+
+        int posicionOcupar = 0;
+
+        // Movimientos por abajo.
+        for (int i = 0; i < (tablero.getCantidadFilas() - posicionConvertida[0]) - 1; i++){
+            movimientos[posicionOcupar] = Character.toString(letrasAscii+posicionConvertida[1]) + (i+1);
+            posicionOcupar++;
+        }
+
+        // Movimientos por arriba.
+        for (int i = (tablero.getCantidadFilas() - posicionConvertida[0]) + 1; i <= tablero.getCantidadFilas(); i++){
+            movimientos[posicionOcupar] = Character.toString(letrasAscii+posicionConvertida[1]) + i;
+            posicionOcupar++;
+        }
+
+        int asciiModificable = letrasAscii;
+
+        //Movimientos por izquierda.
+        for (int i = 0; i < posicionConvertida[1]; i++){
+            movimientos[posicionOcupar] = Character.toString(asciiModificable) + ficha.getPosicionInicial().charAt(1);
+            asciiModificable++;
+            posicionOcupar++;
+        }
+
+        asciiModificable++; // Para saltarse la letra de la posicion inicial.
+
+        //Movimientos por derecha.
+        for (int i = tablero.getCantidadColumnas()-1; i > posicionConvertida[1]; i--){
+            movimientos[posicionOcupar] = Character.toString(asciiModificable) + ficha.getPosicionInicial().charAt(1);
+            asciiModificable++;
+            posicionOcupar++;
+        }
+
+        return movimientos;
+    }
+
+    public static String[] alfil(CrearFicha ficha, CrearTablero tablero){
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+
+        String[] movimientos = new String[32];
+        int posicionOcupar = 0;
+
+        // Movimientos diagonal arriba-derecha
+        for (int i = 1; posicionConvertida[0] - i >= 0 && posicionConvertida[1] + i < tablero.getCantidadColumnas(); i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + i) + (8 - (posicionConvertida[0] - i));
+            posicionOcupar++;
+        }
+
+        // Movimientos diagonal arriba-izquierda
+        for (int i = 1; posicionConvertida[0] - i >= 0 && posicionConvertida[1] - i >= 0; i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - i) + (8 - (posicionConvertida[0] - i));
+            posicionOcupar++;
+        }
+
+        // Movimientos diagonal abajo-derecha
+        for (int i = 1; posicionConvertida[0] + i < tablero.getCantidadFilas() && posicionConvertida[1] + i < tablero.getCantidadColumnas(); i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + i) + (8 - (posicionConvertida[0] + i));
+            posicionOcupar++;
+        }
+
+        // Movimientos diagonal abajo-izquierda
+        for (int i = 1; posicionConvertida[0] + i < tablero.getCantidadFilas() && posicionConvertida[1] - i >= 0; i++) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] - i) + (8 - (posicionConvertida[0] + i));
+            posicionOcupar++;
+        }
+
+        // Recortar el array para eliminar las que posiciones que están vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+        return movimientosFinales;
+    }
+
+    public static String[] dama(CrearFicha ficha, CrearTablero tablero) {
+        String[] movimientosAlfil = alfil(ficha, tablero);
+        String[] movimientosTorre = torre(ficha, tablero);
+
+        String[] movimientos = new String[movimientosAlfil.length + movimientosTorre.length];
+
+        System.arraycopy(movimientosTorre, 0, movimientos, 0, movimientosTorre.length);
+        System.arraycopy(movimientosAlfil, 0, movimientos, movimientosTorre.length, movimientosAlfil.length);
+
+        return movimientos;
+    }
+
+    public static String[] rey(CrearFicha ficha, CrearTablero tablero) {
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+
         String[] movimientos = new String[8];
-        int fila = posicionInicial[0];
-        int columna = posicionInicial[1];
+        int posicionOcupar = 0;
 
-        int[][] movimientosPosibles = {
-                {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
-                {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
-        };
-
-        int index = 0;
-        for (int[] movimientoPosibles : movimientosPosibles) {
-            int nuevaFila = fila + movimientoPosibles[0];
-            int nuevaColumna = columna + movimientoPosibles[1];
-            if (nuevaFila >= 0 && nuevaFila < 8 && nuevaColumna >= 0 && nuevaColumna < 8) {
-                movimientos[index++] = (char) ('A' + nuevaColumna) + Integer.toString(8 - nuevaFila);
-            }
+        // Movimiento hacia arriba
+        if (posicionConvertida[0] > 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1]) + (8 - (posicionConvertida[0] - 1));
+            posicionOcupar++;
         }
 
-        return movimientos;
+        // Movimiento hacia abajo
+        if (posicionConvertida[0] < tablero.getCantidadFilas() - 1) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1]) + (8 - (posicionConvertida[0] + 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento hacia la izquierda
+        if (posicionConvertida[1] > 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + (posicionConvertida[1] - 1)) + (8 - posicionConvertida[0]);
+            posicionOcupar++;
+        }
+
+        // Movimiento hacia la derecha
+        if (posicionConvertida[1] < tablero.getCantidadColumnas() - 1) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + (posicionConvertida[1] + 1)) + (8 - posicionConvertida[0]);
+            posicionOcupar++;
+        }
+
+        // Movimiento diagonal arriba-izquierda
+        if (posicionConvertida[0] > 0 && posicionConvertida[1] > 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + (posicionConvertida[1] - 1)) + (8 - (posicionConvertida[0] - 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento diagonal arriba-derecha
+        if (posicionConvertida[0] > 0 && posicionConvertida[1] < tablero.getCantidadColumnas() - 1) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + (posicionConvertida[1] + 1)) + (8 - (posicionConvertida[0] - 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento diagonal abajo-izquierda
+        if (posicionConvertida[0] < tablero.getCantidadFilas() - 1 && posicionConvertida[1] > 0) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + (posicionConvertida[1] - 1)) + (8 - (posicionConvertida[0] + 1));
+            posicionOcupar++;
+        }
+
+        // Movimiento hacia la diagonal abajo-derecha
+        if (posicionConvertida[0] < tablero.getCantidadFilas() - 1 && posicionConvertida[1] < tablero.getCantidadColumnas() - 1) {
+            movimientos[posicionOcupar] = Character.toString(letrasAscii + (posicionConvertida[1] + 1)) + (8 - (posicionConvertida[0] + 1));
+            posicionOcupar++;
+        }
+
+        // Recortar el array para eliminar las que posiciones que están vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+        return movimientosFinales;
     }
 
-    public static String[] calcularMovimientosTorre(int[] posicionInicial) {
-        String[] movimientos = new String[14]; // 7 movimientos verticales + 7 horizontales
-        int fila = posicionInicial[0];
-        int columna = posicionInicial[1];
+    public static String[] peon(CrearFicha ficha, CrearTablero tablero) {
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+        String[] movimientos = new String[2];
+        int posicionOcupar = 0;
 
-        int index = 0;
-
-        for (int nuevaFila = 0; nuevaFila < 8; nuevaFila++) {
-            if (nuevaFila != fila) {
-                movimientos[index++] = (char) ('A' + columna) + Integer.toString(8 - nuevaFila);
+        // Movimiento para peon blanco (hacia arriba en el tablero)
+        if (ficha.getColor().equals("Blanco")) {
+            // Movimiento de una casilla hacia arriba
+            if (posicionConvertida[0] > 0) {
+                movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 1));
+                posicionOcupar++;
+            }
+            // Movimiento de dos casillas hacia abajo si la posición inicial es la segunda fila del blanco
+            if (posicionConvertida[0] == 6) {
+                movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 2));
+                posicionOcupar++;
+            }
+        }
+        // Movimiento para peones negros (hacia abajo en el tablero)
+        else if (ficha.getColor().equals("Negro")) {
+            // Movimiento de una casilla hacia abajo
+            if (posicionConvertida[0] < tablero.getCantidadFilas() - 1) {
+                movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] + 1));
+                posicionOcupar++;
+            }
+            // Movimiento de dos casillas hacia abajo si la posición inicial es la segunda fila del negro
+            if (posicionConvertida[0] == 1) {
+                movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] + 2));
+                posicionOcupar++;
             }
         }
 
+        // Recortar el array para eliminar posiciones vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
 
-        for (int nuevaColumna = 0; nuevaColumna < 8; nuevaColumna++) {
-            if (nuevaColumna != columna) {
-                movimientos[index++] = (char) ('A' + nuevaColumna) + Integer.toString(8 - fila);
-            }
-        }
-
-        return movimientos;
-    }
-
-    public static String[] calcularMovimientosDama(int[] posicionInicial) {
-        String[] movimientos = new String[27]; // 14 movimientos (7 en las diagonales + 7 verticales + 7 horizontales)
-        int fila = posicionInicial[0];
-        int columna = posicionInicial[1];
-
-        int index = 0;
-
-
-        for (int i = 1; i < 8; i++) {
-            if (fila - i >= 0 && columna + i < 8) {
-                movimientos[index++] = (char) ('A' + columna + i) + Integer.toString(8 - fila + i);
-            }
-            if (fila - i >= 0 && columna - i >= 0) {
-                movimientos[index++] = (char) ('A' + columna - i) + Integer.toString(8 - fila + i);
-            }
-            if (fila + i < 8 && columna + i < 8) {
-                movimientos[index++] = (char) ('A' + columna + i) + Integer.toString(8 - fila - i);
-            }
-            if (fila + i < 8 && columna - i >= 0) {
-                movimientos[index++] = (char) ('A' + columna - i) + Integer.toString(8 - fila - i);
-            }
-        }
-
-
-        for (int nuevaFila = 0; nuevaFila < 8; nuevaFila++) {
-            if (nuevaFila != fila) {
-                movimientos[index++] = (char) ('A' + columna) + Integer.toString(8 - nuevaFila);
-            }
-        }
-
-
-        for (int nuevaColumna = 0; nuevaColumna < 8; nuevaColumna++) {
-            if (nuevaColumna != columna) {
-                movimientos[index++] = (char) ('A' + nuevaColumna) + Integer.toString(8 - fila);
-            }
-        }
-
-        return movimientos;
-    }
-
-    public static String[] calcularMovimientos(String tipoFicha, int[] posicionInicial) {
-        if (tipoFicha == null) return new String[0];
-
-        switch (tipoFicha.toLowerCase()) {
-            case "caballo":
-                return calcularMovimientosCaballo(posicionInicial);
-            case "torre":
-                return calcularMovimientosTorre(posicionInicial);
-            case "dama":
-                return calcularMovimientosDama(posicionInicial);
-            default:
-                return new String[0];
-        }
+        return movimientosFinales;
     }
 }
