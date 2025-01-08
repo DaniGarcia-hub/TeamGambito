@@ -300,7 +300,7 @@ public class MovimientoFicha {
                     }
                     posicionOcupar++;
                 }
-                // Movimiento de dos casillas hacia abajo si la posición inicial es la segunda fila del blanco
+                // Movimiento de dos casillas hacia arriba si la posición inicial es la segunda fila del blanco
                 if (posicionConvertida[0] == 6) {
                     movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 2));
                     posicionOcupar++;
