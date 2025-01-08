@@ -196,8 +196,6 @@ public class MovimientoFicha {
         String[] movimientos = new String[8];
         int posicionOcupar = 0;
 
-        int letrasAscii = 'a';
-
         // Movimiento 1: 2 hacia adelante, 1 hacia la derecha
         if (posicionConvertida[0] + 2 < tablero.getCantidadFilas() && posicionConvertida[1] + 1 < tablero.getCantidadColumnas()) {
             movimientos[posicionOcupar] = Character.toString(letrasAscii + posicionConvertida[1] + 1) + (8 - (posicionConvertida[0] + 2));
