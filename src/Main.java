@@ -125,7 +125,11 @@ public class Main {
                                     movimientosPosibles(MovimientoFicha.rey(ficha, tablero));
                                     break;
                                 case "peón":
-                                    movimientosPosibles(MovimientoFicha.peon(ficha, tablero));
+                                    if (ficha.getPosicionInicial().charAt(1) == '1' && ficha.getColor().equals("Blanco") || ficha.getPosicionInicial().charAt(1) == '8' && ficha.getColor().equals("Negro")){
+                                        System.err.println("Posición no válida para colocar el peón.");
+                                    } else {
+                                        movimientosPosibles(MovimientoFicha.peon(ficha, tablero));
+                                    }
                                     break;
                                 case "caballo":
                                     movimientosPosibles(MovimientoFicha.caballo(ficha, tablero));

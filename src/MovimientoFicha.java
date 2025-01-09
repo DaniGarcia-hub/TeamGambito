@@ -282,6 +282,12 @@ public class MovimientoFicha {
                             ficha.setTipoFicha("Alfil");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return alfil(ficha, tablero);
+                        case "REY":
+                            System.err.println("No se permite el cambio a la ficha REY.");
+                            break;
+                        case "PEON":
+                            System.err.println("No se permite el cambio a otro peón, no tiene un sentido lógico.");
+                            break;
                         default:
                             System.err.println("ERROR. Introduce una opción válida.");
                     }
@@ -298,7 +304,7 @@ public class MovimientoFicha {
                     }
                     posicionOcupar++;
                 }
-                // Movimiento de dos casillas hacia arriba si la posición inicial es la segunda fila del blanco
+                // Movimiento de dos casillas hacia abajo si la posición inicial es la segunda fila del blanco
                 if (posicionConvertida[0] == 6) {
                     movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 2));
                     posicionOcupar++;
@@ -332,6 +338,12 @@ public class MovimientoFicha {
                             ficha.setTipoFicha("Alfil");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return alfil(ficha, tablero);
+                        case "REY":
+                            System.err.println("No se permite el cambio a la ficha REY.");
+                            break;
+                        case "PEON":
+                            System.err.println("No se permite el cambio a otro peón, no tiene un sentido lógico.");
+                            break;
                         default:
                             System.err.println("ERROR. Introduce una opción válida.");
                     }
