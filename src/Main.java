@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class menu {
+public class Main {
 
     static Scanner sc = new Scanner(System.in);
 
@@ -124,8 +124,16 @@ public class menu {
                                 case "rey":
                                     movimientosPosibles(MovimientoFicha.rey(ficha, tablero));
                                     break;
+                                case "peón":
+                                    if (ficha.getPosicionInicial().charAt(1) == '1' && ficha.getColor().equals("Blanco") || ficha.getPosicionInicial().charAt(1) == '8' && ficha.getColor().equals("Negro")){
+                                        System.err.println("Posición no válida para colocar el peón.");
+                                    } else {
+                                        movimientosPosibles(MovimientoFicha.peon(ficha, tablero));
+                                    }
+                                    break;
                                 case "caballo":
                                     movimientosPosibles(MovimientoFicha.caballo(ficha, tablero));
+                                    break;
                                 default:
                                     System.out.println("Los movimientos para esta ficha no están implementados.");
                                     break;
@@ -266,15 +274,19 @@ public class menu {
 
     public static void movimientosPosibles(String[] posiciones){
         System.out.print("Movimientos posibles: ");
-        for (int i = 0; i < posiciones.length; i++){
-            if (i == 0){
-                System.out.print("[" + posiciones[i] + " | ");
-                continue;
-            } else if (i == posiciones.length-1) {
-                System.out.print(posiciones[i] + "]\n");
-                continue;
+        if (posiciones.length == 1){
+            System.out.println("[" + posiciones[0] + "]");
+        } else {
+            for (int i = 0; i < posiciones.length; i++){
+                if (i == 0){
+                    System.out.print("[" + posiciones[i] + " | ");
+                    continue;
+                } else if (i == posiciones.length-1) {
+                    System.out.print(posiciones[i] + "]\n");
+                    continue;
+                }
+                System.out.print(posiciones[i] + " | ");
             }
-            System.out.print(posiciones[i] + " | ");
         }
     }
 }

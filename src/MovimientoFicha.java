@@ -1,3 +1,6 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class MovimientoFicha {
 
     static final int letrasAscii = 65; // Letra A.
@@ -24,7 +27,18 @@ public class MovimientoFicha {
         return posicionConvertida;
     }
 
+    public static String[] recorrerDatosArray(String[] datos){
+        String[] datosFinales = new String[datos.length];
+        for (int i = 0; i < datos.length; i++){
+            datosFinales[i] = datos[i];
+        }
 
+        // Recortar el array para eliminar posiciones vacías
+        String[] movimientosFinales = new String[datos.length];
+        System.arraycopy(datosFinales, 0, movimientosFinales, 0, datos.length);
+
+        return datosFinales;
+    }
 
     public static String[] torre(CrearFicha ficha, CrearTablero tablero){
         int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
@@ -169,7 +183,11 @@ public class MovimientoFicha {
             posicionOcupar++;
         }
 
-        return movimientos;
+        // Recortar el array para eliminar posiciones vacías
+        String[] movimientosFinales = new String[posicionOcupar];
+        System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+        return movimientosFinales;
     }
 
     public static String[] caballo(CrearFicha ficha, CrearTablero tablero) {
@@ -177,8 +195,6 @@ public class MovimientoFicha {
 
         String[] movimientos = new String[8];
         int posicionOcupar = 0;
-
-        int letrasAscii = 'a';
 
         // Movimiento 1: 2 hacia adelante, 1 hacia la derecha
         if (posicionConvertida[0] + 2 < tablero.getCantidadFilas() && posicionConvertida[1] + 1 < tablero.getCantidadColumnas()) {
@@ -235,6 +251,128 @@ public class MovimientoFicha {
         return movimientosFinales;
     }
 
+    public static String[] peon (CrearFicha ficha, CrearTablero tablero){
 
+        Scanner sc = new Scanner(System.in);
 
+        int[] posicionConvertida = convertirPosicion(ficha.getPosicionInicial());
+        int posicionOcupar = 0;
+
+        String[] movimientos = new String[2];
+
+        if (ficha.getColor().equals("Blanco")){
+            if (posicionConvertida[0] == 0) {
+                System.out.println("Limite del tablero. ¿A que ficha quieres cambiar?");
+                String cambioFicha = sc.nextLine().toUpperCase();
+                try {
+                    switch (cambioFicha) {
+                        case "DAMA":
+                            ficha.setTipoFicha("Dama");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return dama(ficha, tablero);
+                        case "TORRE":
+                            ficha.setTipoFicha("Torre");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return torre(ficha, tablero);
+                        case "CABALLO":
+                            ficha.setTipoFicha("Caballo");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return caballo(ficha, tablero);
+                        case "ALFIL":
+                            ficha.setTipoFicha("Alfil");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return alfil(ficha, tablero);
+                        case "REY":
+                            System.err.println("No se permite el cambio a la ficha REY.");
+                            break;
+                        case "PEON":
+                            System.err.println("No se permite el cambio a otro peón, no tiene un sentido lógico.");
+                            break;
+                        default:
+                            System.err.println("ERROR. Introduce una opción válida.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("ERROR: Solo puedes introducir texto.");
+                    sc.next();
+                }
+            } else {
+                // Movimiento de una casilla hacia arriba
+                if (posicionConvertida[0] > 0) {
+                    movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 1));
+                    if (movimientos[posicionOcupar].charAt(1) == 6){
+                        System.out.println("Limite del tablero.");
+                    }
+                    posicionOcupar++;
+                }
+                // Movimiento de dos casillas hacia abajo si la posición inicial es la segunda fila del blanco
+                if (posicionConvertida[0] == 6) {
+                    movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 2));
+                    posicionOcupar++;
+                }
+
+                // Recortar el array para eliminar posiciones vacías
+                String[] movimientosFinales = new String[posicionOcupar];
+                System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+                return movimientosFinales;
+            }
+        } else
+            if (posicionConvertida[0] == 7) {
+                System.out.println("Limite del tablero. ¿A que ficha quieres cambiar?");
+                String cambioFicha = sc.nextLine().toUpperCase();
+                try {
+                    switch (cambioFicha) {
+                        case "DAMA":
+                            ficha.setTipoFicha("Dama");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return dama(ficha, tablero);
+                        case "TORRE":
+                            ficha.setTipoFicha("Torre");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return torre(ficha, tablero);
+                        case "CABALLO":
+                            ficha.setTipoFicha("Caballo");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return caballo(ficha, tablero);
+                        case "ALFIL":
+                            ficha.setTipoFicha("Alfil");
+                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                            return alfil(ficha, tablero);
+                        case "REY":
+                            System.err.println("No se permite el cambio a la ficha REY.");
+                            break;
+                        case "PEON":
+                            System.err.println("No se permite el cambio a otro peón, no tiene un sentido lógico.");
+                            break;
+                        default:
+                            System.err.println("ERROR. Introduce una opción válida.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("ERROR: Solo puedes introducir texto.");
+                    sc.next();
+                }
+            } else {
+                // Movimiento de una casilla hacia abajo
+                if (posicionConvertida[0] < tablero.getCantidadFilas() - 1) {
+                    movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] + 1));
+                    if (movimientos[posicionOcupar].charAt(1) == 6){
+                        System.out.println("Limite del tablero.");
+                    }
+                    posicionOcupar++;
+                }
+                // Movimiento de dos casillas hacia abajo si la posición inicial es la segunda fila del negro
+                if (posicionConvertida[0] == 1) {
+                    movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] + 2));
+                    posicionOcupar++;
+                }
+
+                // Recortar el array para eliminar posiciones vacías
+                String[] movimientosFinales = new String[posicionOcupar];
+                System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
+
+                return movimientosFinales;
+            }
+
+            return movimientos;
+    }
 }
