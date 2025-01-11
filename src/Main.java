@@ -176,7 +176,18 @@ public class Main {
         System.out.println("4. Caballo" + " " + simboloPiezas.caballoBlanco);
         System.out.println("5. Alfil" + " " + simboloPiezas.alfilBlanco);
         System.out.println("6. Peón" + " " + simboloPiezas.peonBlanco);
-        System.out.println("Escoge la ficha:");
+        System.out.println("Escoge la ficha (Escoger número):");
+    }
+
+    public static void mostrarMenuPromocion() {
+        System.out.println("*******");
+        System.out.println("FICHAS");
+        System.out.println("*******");
+        System.out.println("1. Dama" + " " + simboloPiezas.damaBlanca);
+        System.out.println("2. Torre" + " " + simboloPiezas.torreBlanca);
+        System.out.println("3. Caballo" + " " + simboloPiezas.caballoBlanco);
+        System.out.println("4. Alfil" + " " + simboloPiezas.alfilBlanco);
+        System.out.println("Escoge la ficha a la que promocionar. (Escoger número):");
     }
 
     public static void mostrarMenuColor() {
@@ -185,7 +196,7 @@ public class Main {
         System.out.println("*******");
         System.out.println("1. Blanco" + " " + simboloPiezas.colorBlanco);
         System.out.println("2. Negro" + " " + simboloPiezas.colorNegro);
-        System.out.println("Escoge el color de la ficha:");
+        System.out.println("Escoge el color de la ficha (Escoger número):");
     }
 
     public static String seleccionarFicha() {
