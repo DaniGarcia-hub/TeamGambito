@@ -262,37 +262,32 @@ public class MovimientoFicha {
 
         if (ficha.getColor().equals("Blanco")){
             if (posicionConvertida[0] == 0) {
-                System.out.println("Limite del tablero. ¿A que ficha quieres cambiar?");
-                String cambioFicha = sc.nextLine().toUpperCase();
+                System.out.println("El peón ha promocionado.");
+                Main.mostrarMenuPromocion();
                 try {
+                    int cambioFicha = sc.nextInt();
                     switch (cambioFicha) {
-                        case "DAMA":
+                        case 1:
                             ficha.setTipoFicha("Dama");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return dama(ficha, tablero);
-                        case "TORRE":
+                        case 2:
                             ficha.setTipoFicha("Torre");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return torre(ficha, tablero);
-                        case "CABALLO":
+                        case 3:
                             ficha.setTipoFicha("Caballo");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return caballo(ficha, tablero);
-                        case "ALFIL":
+                        case 4:
                             ficha.setTipoFicha("Alfil");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return alfil(ficha, tablero);
-                        case "REY":
-                            System.err.println("No se permite el cambio a la ficha REY.");
-                            break;
-                        case "PEON":
-                            System.err.println("No se permite el cambio a otro peón, no tiene un sentido lógico.");
-                            break;
                         default:
                             System.err.println("ERROR. Introduce una opción válida.");
                     }
                 } catch (InputMismatchException e) {
-                    System.err.println("ERROR: Solo puedes introducir texto.");
+                    System.err.println("ERROR: Solo puedes introducir los números indicados.");
                     sc.next();
                 }
             } else {
@@ -318,37 +313,32 @@ public class MovimientoFicha {
             }
         } else
             if (posicionConvertida[0] == 7) {
-                System.out.println("Limite del tablero. ¿A que ficha quieres cambiar?");
-                String cambioFicha = sc.nextLine().toUpperCase();
+                System.out.println("El peón ha promocionado.");
+                Main.mostrarMenuPromocion();
                 try {
+                    int cambioFicha = sc.nextInt();
                     switch (cambioFicha) {
-                        case "DAMA":
+                        case 1:
                             ficha.setTipoFicha("Dama");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return dama(ficha, tablero);
-                        case "TORRE":
+                        case 2:
                             ficha.setTipoFicha("Torre");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return torre(ficha, tablero);
-                        case "CABALLO":
+                        case 3:
                             ficha.setTipoFicha("Caballo");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return caballo(ficha, tablero);
-                        case "ALFIL":
+                        case 4:
                             ficha.setTipoFicha("Alfil");
                             System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
                             return alfil(ficha, tablero);
-                        case "REY":
-                            System.err.println("No se permite el cambio a la ficha REY.");
-                            break;
-                        case "PEON":
-                            System.err.println("No se permite el cambio a otro peón, no tiene un sentido lógico.");
-                            break;
                         default:
                             System.err.println("ERROR. Introduce una opción válida.");
                     }
                 } catch (InputMismatchException e) {
-                    System.err.println("ERROR: Solo puedes introducir texto.");
+                    System.err.println("ERROR: Solo puedes introducir los números indicados.");
                     sc.next();
                 }
             } else {
