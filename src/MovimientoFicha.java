@@ -262,40 +262,14 @@ public class MovimientoFicha {
 
         if (ficha.getColor().equals("Blanco")){
             if (posicionConvertida[0] == 0) {
-                System.out.println("El peón ha promocionado.");
-                Main.mostrarMenuPromocion();
-                try {
-                    int cambioFicha = sc.nextInt();
-                    switch (cambioFicha) {
-                        case 1:
-                            ficha.setTipoFicha("Dama");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return dama(ficha, tablero);
-                        case 2:
-                            ficha.setTipoFicha("Torre");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return torre(ficha, tablero);
-                        case 3:
-                            ficha.setTipoFicha("Caballo");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return caballo(ficha, tablero);
-                        case 4:
-                            ficha.setTipoFicha("Alfil");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return alfil(ficha, tablero);
-                        default:
-                            System.err.println("ERROR. Introduce una opción válida.");
-                    }
-                } catch (InputMismatchException e) {
-                    System.err.println("ERROR: Solo puedes introducir los números indicados.");
-                    sc.next();
-                }
+                return promocionPeon(ficha, tablero);
             } else {
                 // Movimiento de una casilla hacia arriba
                 if (posicionConvertida[0] > 0) {
                     movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] - 1));
-                    if (movimientos[posicionOcupar].charAt(1) == 6){
-                        System.out.println("Limite del tablero.");
+                    if (posicionConvertida[0] - 1 == 0){
+                        System.out.println("Movimientos posibles: [" + Character.toString(letrasAscii+posicionConvertida[1]) + "8]");
+                        return promocionPeon(ficha, tablero);
                     }
                     posicionOcupar++;
                 }
@@ -313,40 +287,14 @@ public class MovimientoFicha {
             }
         } else
             if (posicionConvertida[0] == 7) {
-                System.out.println("El peón ha promocionado.");
-                Main.mostrarMenuPromocion();
-                try {
-                    int cambioFicha = sc.nextInt();
-                    switch (cambioFicha) {
-                        case 1:
-                            ficha.setTipoFicha("Dama");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return dama(ficha, tablero);
-                        case 2:
-                            ficha.setTipoFicha("Torre");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return torre(ficha, tablero);
-                        case 3:
-                            ficha.setTipoFicha("Caballo");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return caballo(ficha, tablero);
-                        case 4:
-                            ficha.setTipoFicha("Alfil");
-                            System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
-                            return alfil(ficha, tablero);
-                        default:
-                            System.err.println("ERROR. Introduce una opción válida.");
-                    }
-                } catch (InputMismatchException e) {
-                    System.err.println("ERROR: Solo puedes introducir los números indicados.");
-                    sc.next();
-                }
+                return promocionPeon(ficha, tablero);
             } else {
                 // Movimiento de una casilla hacia abajo
                 if (posicionConvertida[0] < tablero.getCantidadFilas() - 1) {
                     movimientos[posicionOcupar] = Character.toString((char) (letrasAscii + posicionConvertida[1])) + (8 - (posicionConvertida[0] + 1));
-                    if (movimientos[posicionOcupar].charAt(1) == 6){
-                        System.out.println("Limite del tablero.");
+                    if (posicionConvertida[0] + 1 == 7){
+                        System.out.println("Movimientos posibles: [" + Character.toString(letrasAscii+posicionConvertida[1]) + "1]");
+                        return promocionPeon(ficha, tablero);
                     }
                     posicionOcupar++;
                 }
@@ -361,8 +309,50 @@ public class MovimientoFicha {
                 System.arraycopy(movimientos, 0, movimientosFinales, 0, posicionOcupar);
 
                 return movimientosFinales;
-            }
 
-            return movimientos;
+            }
+    }
+
+    public static String[] promocionPeon (CrearFicha ficha, CrearTablero tablero){
+        Scanner sc = new Scanner(System.in);
+
+        String[] mov = new String[2];
+        System.out.println("El peón ha promocionado.");
+        boolean salirPromocion = false;
+        while (!salirPromocion){
+            Main.mostrarMenuPromocion();
+            try {
+                int cambioFicha = sc.nextInt();
+                switch (cambioFicha) {
+                    case 1:
+                        ficha.setTipoFicha("Dama");
+                        System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                        return dama(ficha, tablero);
+                    case 2:
+                        ficha.setTipoFicha("Torre");
+                        System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                        return torre(ficha, tablero);
+                    case 3:
+                        ficha.setTipoFicha("Caballo");
+                        System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                        return caballo(ficha, tablero);
+                    case 4:
+                        ficha.setTipoFicha("Alfil");
+                        System.out.println("Has cambiado a la ficha: " + ficha.getTipoFicha());
+                        return alfil(ficha, tablero);
+                    case 5:
+                        System.out.println("Saliendo de la promoción del peón...");
+                        salirPromocion = true;
+                        break;
+                    default:
+                        System.err.println("ERROR. Introduce una opción válida.");
+                }
+            } catch (InputMismatchException e) {
+                System.err.println("ERROR: Solo puedes introducir los números indicados.");
+                sc.next();
+            }
+        }
+
+        return mov;
     }
 }

@@ -187,6 +187,7 @@ public class Main {
         System.out.println("2. Torre" + " " + simboloPiezas.torreBlanca);
         System.out.println("3. Caballo" + " " + simboloPiezas.caballoBlanco);
         System.out.println("4. Alfil" + " " + simboloPiezas.alfilBlanco);
+        System.out.println("5. Salir");
         System.out.println("Escoge la ficha a la que promocionar. (Escoger número):");
     }
 
@@ -284,19 +285,29 @@ public class Main {
     }
 
     public static void movimientosPosibles(String[] posiciones){
-        System.out.print("Movimientos posibles: ");
-        if (posiciones.length == 1){
-            System.out.println("[" + posiciones[0] + "]");
-        } else {
-            for (int i = 0; i < posiciones.length; i++){
-                if (i == 0){
-                    System.out.print("[" + posiciones[i] + " | ");
-                    continue;
-                } else if (i == posiciones.length-1) {
-                    System.out.print(posiciones[i] + "]\n");
-                    continue;
+        boolean contieneNull = false;
+        for (String posicion : posiciones){
+            if (posicion == null){
+                contieneNull = true;
+                break;
+            }
+        }
+
+        if (!contieneNull){
+            System.out.print("Movimientos posibles: ");
+            if (posiciones.length == 1){
+                System.out.println("[" + posiciones[0] + "]");
+            } else {
+                for (int i = 0; i < posiciones.length; i++){
+                    if (i == 0){
+                        System.out.print("[" + posiciones[i] + " | ");
+                        continue;
+                    } else if (i == posiciones.length-1) {
+                        System.out.print(posiciones[i] + "]\n");
+                        continue;
+                    }
+                    System.out.print(posiciones[i] + " | ");
                 }
-                System.out.print(posiciones[i] + " | ");
             }
         }
     }
